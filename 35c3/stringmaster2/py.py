@@ -22,7 +22,8 @@ def get_one_gadget(is_remote = False):
     if is_remote: 
         return 0x4f2c5
     else:
-        return 0x4345e
+       # return 0x4345e
+        return 0x4f2c5 
 
 def read_menu(proc):
     proc.recvuntil("\n> ")
